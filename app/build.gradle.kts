@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt.android)
+    alias(libs.plugins.kotlinx.serialization) apply true
 }
 
 android {
@@ -42,8 +43,7 @@ android {
 }
 
 dependencies {
-
-    // native libraries
+    // androidx
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -53,19 +53,26 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
-    // test implementation
+    // test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
 
-    // debug implementation
+    // debug
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    //kotlinx serialization
+    implementation(libs.kotlinx.serialization.json)
+
+    //okhttp
+    implementation(libs.okhttp)
+
     // retrofit
     implementation(libs.retrofit2.retrofit)
+    implementation(libs.retrofit2.converter.kotlinx.serialization)
 
     // hilt
     implementation(libs.hilt.android)
