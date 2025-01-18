@@ -1,13 +1,5 @@
-import com.albertheijn.rijksmuseumassignment.data.model.dto.AcquisitionDto
-import com.albertheijn.rijksmuseumassignment.data.model.dto.ClassificationDto
-import com.albertheijn.rijksmuseumassignment.data.model.dto.ColorDto
-import com.albertheijn.rijksmuseumassignment.data.model.dto.DatingDto
-import com.albertheijn.rijksmuseumassignment.data.model.dto.DimensionDto
-import com.albertheijn.rijksmuseumassignment.data.model.dto.ImageDto
-import com.albertheijn.rijksmuseumassignment.data.model.dto.LabelDto
-import com.albertheijn.rijksmuseumassignment.data.model.dto.LinksDto
-import com.albertheijn.rijksmuseumassignment.data.model.dto.MakerDto
-import com.albertheijn.rijksmuseumassignment.data.model.dto.NormalizedColorDto
+package com.albertheijn.rijksmuseumassignment.data.model.dto
+
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
