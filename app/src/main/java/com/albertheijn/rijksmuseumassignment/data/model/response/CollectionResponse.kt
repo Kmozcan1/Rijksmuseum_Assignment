@@ -7,5 +7,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CollectionResponse(
     @SerialName("artObjects")
-    val artObjects: List<ArtObjectDto>? = emptyList()
+    val artObjects: List<ArtObjectDto?>? = emptyList()
 ) : RijksmuseumApiResponse()
