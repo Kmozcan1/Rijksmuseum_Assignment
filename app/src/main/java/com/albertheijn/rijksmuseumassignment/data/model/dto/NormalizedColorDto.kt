@@ -5,9 +5,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class NormalizedColorDto(
-    @SerialName("originalHex")
-    val originalHex: String? = null,
-
     @SerialName("normalizedHex")
-    val normalizedHex: String? = null
+    val normalizedHex: String? = null,
+
+    @SerialName("originalHex")
+    val originalHex: String? = null
 )

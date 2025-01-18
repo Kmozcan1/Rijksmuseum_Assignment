@@ -5,12 +5,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AcquisitionDto(
-    @SerialName("method")
-    val method: String? = null,
+    @SerialName("creditLine")
+    val creditLine: String? = null,
 
     @SerialName("date")
     val date: String? = null,
 
-    @SerialName("creditLine")
-    val creditLine: String? = null
+    @SerialName("method")
+    val method: String? = null
 )

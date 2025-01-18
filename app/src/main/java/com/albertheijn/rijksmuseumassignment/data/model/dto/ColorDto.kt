@@ -5,9 +5,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ColorDto(
-    @SerialName("percentage")
-    val percentage: Int? = null,
-
     @SerialName("hex")
-    val hex: String? = null
+    val hex: String? = null,
+
+    @SerialName("percentage")
+    val percentage: Int? = null
 )

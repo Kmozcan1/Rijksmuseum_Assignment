@@ -8,18 +8,18 @@ data class ImageDto(
     @SerialName("guid")
     val guid: String? = null,
 
+    @SerialName("height")
+    val height: Int? = null,
+
     @SerialName("offsetPercentageX")
     val offsetPercentageX: Int? = null,
 
     @SerialName("offsetPercentageY")
     val offsetPercentageY: Int? = null,
 
-    @SerialName("width")
-    val width: Int? = null,
-
-    @SerialName("height")
-    val height: Int? = null,
-
     @SerialName("url")
-    val url: String? = null
+    val url: String? = null,
+
+    @SerialName("width")
+    val width: Int? = null
 )

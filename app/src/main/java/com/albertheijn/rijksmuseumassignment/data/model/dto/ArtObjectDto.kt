@@ -1,5 +1,13 @@
-package com.albertheijn.rijksmuseumassignment.data.model.dto
-
+import com.albertheijn.rijksmuseumassignment.data.model.dto.AcquisitionDto
+import com.albertheijn.rijksmuseumassignment.data.model.dto.ClassificationDto
+import com.albertheijn.rijksmuseumassignment.data.model.dto.ColorDto
+import com.albertheijn.rijksmuseumassignment.data.model.dto.DatingDto
+import com.albertheijn.rijksmuseumassignment.data.model.dto.DimensionDto
+import com.albertheijn.rijksmuseumassignment.data.model.dto.ImageDto
+import com.albertheijn.rijksmuseumassignment.data.model.dto.LabelDto
+import com.albertheijn.rijksmuseumassignment.data.model.dto.LinksDto
+import com.albertheijn.rijksmuseumassignment.data.model.dto.MakerDto
+import com.albertheijn.rijksmuseumassignment.data.model.dto.NormalizedColorDto
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -26,8 +34,17 @@ data class ArtObjectDto(
     @SerialName("colorsWithNormalization")
     val colorsWithNormalization: List<NormalizedColorDto>? = null,
 
+    @SerialName("normalized32Colors")
+    val normalized32Colors: List<ColorDto>? = null,
+
+    @SerialName("normalizedColors")
+    val normalizedColors: List<ColorDto>? = null,
+
     @SerialName("copyrightHolder")
     val copyrightHolder: String? = null,
+
+    @SerialName("dating")
+    val dating: DatingDto? = null,
 
     @SerialName("description")
     val description: String? = null,
@@ -80,12 +97,6 @@ data class ArtObjectDto(
     @SerialName("materialsThesaurus")
     val materialsThesaurus: List<String>? = null,
 
-    @SerialName("normalized32Colors")
-    val normalized32Colors: List<ColorDto>? = null,
-
-    @SerialName("normalizedColors")
-    val normalizedColors: List<ColorDto>? = null,
-
     @SerialName("objectCollection")
     val objectCollection: List<String>? = null,
 
@@ -116,8 +127,8 @@ data class ArtObjectDto(
     @SerialName("principalOrFirstMaker")
     val principalOrFirstMaker: String? = null,
 
-    @SerialName("priRef")
-    val priRef: String? = null,
+    @SerialName("priref")
+    val priref: String? = null,
 
     @SerialName("productionPlaces")
     val productionPlaces: List<String>? = null,

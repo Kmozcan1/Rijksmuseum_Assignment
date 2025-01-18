@@ -5,14 +5,14 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ClassificationDto(
-    @SerialName("iconClassIdentifier")
-    val iconClassIdentifier: List<String>? = null,
+    @SerialName("classificationString")
+    val classificationString: List<String>? = null,
 
     @SerialName("iconClassDescription")
     val iconClassDescription: List<String>? = null,
 
-    @SerialName("classificationString")
-    val classificationString: List<String>? = null,
+    @SerialName("iconClassIdentifier")
+    val iconClassIdentifier: List<String>? = null,
 
     @SerialName("objectCategory")
     val objectCategory: List<String>? = null,
