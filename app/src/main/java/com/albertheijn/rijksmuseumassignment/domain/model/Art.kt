@@ -4,7 +4,8 @@ package com.albertheijn.rijksmuseumassignment.domain.model
 data class Art(
     val author: String,
     val id: String,
-    val imageUrl: String?,
-    val longTitle: String? = null,
+    val imageUrl: String,
+    val longTitle: String,
+    val objectNumber: String,
     val title: String
 )

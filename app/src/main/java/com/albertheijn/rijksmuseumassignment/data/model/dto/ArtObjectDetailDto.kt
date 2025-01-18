@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ArtObjectDto(
+data class ArtObjectDetailDto(
     @SerialName("acquisition")
     val acquisition: AcquisitionDto? = null,
 
@@ -25,12 +25,6 @@ data class ArtObjectDto(
 
     @SerialName("colorsWithNormalization")
     val colorsWithNormalization: List<NormalizedColorDto?>? = null,
-
-    @SerialName("normalized32Colors")
-    val normalized32Colors: List<ColorDto?>? = null,
-
-    @SerialName("normalizedColors")
-    val normalizedColors: List<ColorDto?>? = null,
 
     @SerialName("copyrightHolder")
     val copyrightHolder: String? = null,
@@ -88,6 +82,12 @@ data class ArtObjectDto(
 
     @SerialName("materialsThesaurus")
     val materialsThesaurus: List<String?>? = null,
+
+    @SerialName("normalized32Colors")
+    val normalized32Colors: List<ColorDto?>? = null,
+
+    @SerialName("normalizedColors")
+    val normalizedColors: List<ColorDto?>? = null,
 
     @SerialName("objectCollection")
     val objectCollection: List<String?>? = null,

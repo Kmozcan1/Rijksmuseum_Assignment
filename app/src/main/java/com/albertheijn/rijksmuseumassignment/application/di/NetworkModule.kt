@@ -37,15 +37,20 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .client(okHttpClient)
-        .addConverterFactory(
-            Json.asConverterFactory(
-                contentType = "application/json; charset=UTF8".toMediaType()
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+        val json = Json {
+            ignoreUnknownKeys = true
+            coerceInputValues = true
+        }
+
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(
+                json.asConverterFactory("application/json; charset=UTF8".toMediaType())
             )
-        )
-        .build()
+            .build()
+    }
 
     @Provides
     @Singleton
