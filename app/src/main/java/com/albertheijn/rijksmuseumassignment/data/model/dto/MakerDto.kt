@@ -30,7 +30,7 @@ data class MakerDto(
     val nationality: String? = null,
 
     @SerialName("occupation")
-    val occupation: List<String>? = null,
+    val occupation: List<String?>? = null,
 
     @SerialName("placeOfBirth")
     val placeOfBirth: String? = null,
@@ -39,13 +39,13 @@ data class MakerDto(
     val placeOfDeath: String? = null,
 
     @SerialName("productionPlaces")
-    val productionPlaces: List<String>? = null,
+    val productionPlaces: List<String?>? = null,
 
     @SerialName("qualification")
     val qualification: String? = null,
 
     @SerialName("roles")
-    val roles: List<String>? = null,
+    val roles: List<String?>? = null,
 
     @SerialName("unFixedName")
     val unFixedName: String? = null

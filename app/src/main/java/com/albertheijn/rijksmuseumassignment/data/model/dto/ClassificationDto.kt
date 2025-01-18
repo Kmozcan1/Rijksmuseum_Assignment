@@ -6,20 +6,20 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ClassificationDto(
     @SerialName("classificationString")
-    val classificationString: List<String>? = null,
+    val classificationString: List<String?>? = null,
 
     @SerialName("iconClassDescription")
-    val iconClassDescription: List<String>? = null,
+    val iconClassDescription: List<String?>? = null,
 
     @SerialName("iconClassIdentifier")
-    val iconClassIdentifier: List<String>? = null,
+    val iconClassIdentifier: List<String?>? = null,
 
     @SerialName("objectCategory")
-    val objectCategory: List<String>? = null,
+    val objectCategory: List<String?>? = null,
 
     @SerialName("people")
-    val people: List<String>? = null,
+    val people: List<String?>? = null,
 
     @SerialName("periods")
-    val periods: List<String>? = null
+    val periods: List<String?>? = null
 )
