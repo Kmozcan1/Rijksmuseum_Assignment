@@ -15,7 +15,7 @@ data class ArtObjectDto(
     val associations: List<String?>? = null,
 
     @SerialName("catRefRPK")
-    val catRefRPK: List<String?>? = null,
+    val catRefRpk: List<String?>? = null,
 
     @SerialName("classification")
     val classification: ClassificationDto? = null,
