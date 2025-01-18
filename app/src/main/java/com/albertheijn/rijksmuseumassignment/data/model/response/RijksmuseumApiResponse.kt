@@ -5,9 +5,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 open class RijksmuseumApiResponse(
-    @SerialName("elapsedMilliseconds")
-    val elapsedMilliseconds: Long? = null,
-
     @SerialName("count")
-    val count: Int? = 0
+    val count: Int? = 0,
+
+    @SerialName("elapsedMilliseconds")
+    val elapsedMilliseconds: Long? = null
 )
