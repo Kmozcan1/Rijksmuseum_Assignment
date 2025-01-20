@@ -1,4 +1,4 @@
-package com.albertheijn.rijksmuseumassignment.ui.theme
+package com.albertheijn.rijksmuseumassignment.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
