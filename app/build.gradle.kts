@@ -44,6 +44,7 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 }
@@ -86,10 +87,10 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    //kotlinx serialization
+    // kotlinx serialization
     implementation(libs.kotlinx.serialization.json)
 
-    //okhttp
+    // okhttp
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)
 
@@ -105,6 +106,9 @@ dependencies {
     // coil
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
+
+    // timber
+    implementation(libs.timber)
 }
 
 kapt {
