@@ -17,6 +17,7 @@ interface RijksmuseumApi {
     suspend fun getCollection(
         @Path("culture") culture: String = "en",
         @Query("p") page: Int = 0,
-        @Query("ps") pageSize: Int = 20
+        @Query("ps") pageSize: Int = 20,
+        @Query("s") sort: String = "artist"
     ): CollectionResponse
 }
