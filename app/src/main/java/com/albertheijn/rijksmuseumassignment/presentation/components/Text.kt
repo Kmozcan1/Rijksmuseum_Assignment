@@ -12,6 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
+import com.albertheijn.rijksmuseumassignment.presentation.theme.Font
 
 @Composable
 fun TextHeader(
@@ -62,6 +63,7 @@ fun TextPrimary(
     softWrap: Boolean = true,
     maxLines: Int = Int.MAX_VALUE,
     bold: Boolean = false,
+    italic: Boolean = false,
     onTextLayout: (TextLayoutResult) -> Unit = {},
 ) {
     Text(
@@ -75,11 +77,16 @@ fun TextPrimary(
         maxLines = maxLines,
         onTextLayout = onTextLayout,
         fontFamily = Font.arial,
-        style = if (bold) {
-            MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
-        } else {
-            MaterialTheme.typography.bodyLarge
-        }
+        style = MaterialTheme.typography.bodyLarge.copy(
+            fontWeight = when {
+                bold -> FontWeight.Bold
+                else -> FontWeight.Normal
+            },
+            fontStyle = when {
+                italic -> FontStyle.Italic
+                else -> FontStyle.Normal
+            }
+        )
     )
 }
 
@@ -94,6 +101,7 @@ fun TextSecondary(
     softWrap: Boolean = true,
     maxLines: Int = Int.MAX_VALUE,
     bold: Boolean = false,
+    italic: Boolean = false,
     onTextLayout: (TextLayoutResult) -> Unit = {},
 ) {
     Text(
@@ -107,10 +115,15 @@ fun TextSecondary(
         maxLines = maxLines,
         onTextLayout = onTextLayout,
         fontFamily = Font.arial,
-        style = if (bold) {
-            MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
-        } else {
-            MaterialTheme.typography.bodyMedium
-        }
+        style = MaterialTheme.typography.bodyMedium.copy(
+            fontWeight = when {
+                bold -> FontWeight.Bold
+                else -> FontWeight.Normal
+            },
+            fontStyle = when {
+                italic -> FontStyle.Italic
+                else -> FontStyle.Normal
+            }
+        )
     )
 }

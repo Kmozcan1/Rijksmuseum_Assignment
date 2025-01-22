@@ -10,6 +10,6 @@ class GetArtDetailsUseCase @Inject constructor(
     suspend operator fun invoke(
         objectNumber: String
     ): ArtDetails {
-        return repository.getArtDetails(objectNumber)
+        return repository.getArtDetails(objectNumber = objectNumber)
     }
 }
