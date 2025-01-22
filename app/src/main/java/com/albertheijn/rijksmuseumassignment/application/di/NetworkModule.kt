@@ -21,7 +21,7 @@ import javax.inject.Singleton
 object NetworkModule {
     private const val API_KEY = "0fiuZFh4"
     private const val BASE_URL = "https://www.rijksmuseum.nl/api/"
-    private const val TIMEOUT_IN_SECONDS = 1L
+    private const val TIMEOUT_IN_SECONDS = 30L
 
     @Provides
     @Singleton
