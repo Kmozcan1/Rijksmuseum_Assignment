@@ -1,6 +1,5 @@
 package com.albertheijn.rijksmuseumassignment.presentation.screen.artDetail
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,14 +27,15 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.albertheijn.rijksmuseumassignment.R
+import com.albertheijn.rijksmuseumassignment.presentation.components.RijksmuseumLogoTopBarContent
 import com.albertheijn.rijksmuseumassignment.presentation.components.TextHeader
 import com.albertheijn.rijksmuseumassignment.presentation.components.TextPrimary
 import com.albertheijn.rijksmuseumassignment.presentation.model.ArtDetailsUiModel
 import com.albertheijn.rijksmuseumassignment.presentation.model.ArtImageUiModel
+import com.albertheijn.rijksmuseumassignment.presentation.theme.Dimens.circularProgressIndicatorSize
 import com.albertheijn.rijksmuseumassignment.presentation.theme.Dimens.standardHalfPadding
 import com.albertheijn.rijksmuseumassignment.presentation.theme.Dimens.standardPadding
 import com.albertheijn.rijksmuseumassignment.presentation.theme.Dimens.standardQuarterPadding
-import com.albertheijn.rijksmuseumassignment.presentation.theme.Dimens.circularProgressIndicatorSize
 
 @Composable
 fun ArtDetailsScreen() {
@@ -64,13 +64,7 @@ fun ArtDetailsScreen() {
 }
 
 @Composable
-fun ArtDetailsScreenTitle() {
-    Image(
-        painter = painterResource(id = R.drawable.ic_rijksmuseum_topbar),
-        contentDescription = "Art Details screen top bar logo",
-        modifier = Modifier.fillMaxSize(fraction = 0.6f)
-    )
-}
+fun ArtDetailsScreenTopBarContent() = RijksmuseumLogoTopBarContent()
 
 @Composable
 private fun ArtAuthorRow(author: String) {

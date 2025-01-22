@@ -1,16 +1,10 @@
 package com.albertheijn.rijksmuseumassignment
 
-import com.albertheijn.rijksmuseumassignment.domain.model.Art
 import com.albertheijn.rijksmuseumassignment.domain.repository.RijksmuseumRepository
 import com.albertheijn.rijksmuseumassignment.domain.usecase.GetArtListUseCase
 import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Test
 
 class GetArtListUseCaseTest {
     @MockK

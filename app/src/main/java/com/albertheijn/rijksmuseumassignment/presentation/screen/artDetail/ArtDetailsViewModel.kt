@@ -6,8 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.albertheijn.rijksmuseumassignment.domain.usecase.GetArtDetailsUseCase
 import com.albertheijn.rijksmuseumassignment.presentation.mapper.toUiModel
 import com.albertheijn.rijksmuseumassignment.presentation.model.ArtDetailsUiModel
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -10,7 +10,6 @@ import com.albertheijn.rijksmuseumassignment.domain.model.Art
 import com.albertheijn.rijksmuseumassignment.domain.usecase.GetArtListUseCase
 import com.albertheijn.rijksmuseumassignment.presentation.mapper.toUiModel
 import com.albertheijn.rijksmuseumassignment.presentation.model.ArtListItemUiModel
-import com.albertheijn.rijksmuseumassignment.presentation.screen.ComposableNavigationScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
