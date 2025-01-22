@@ -21,12 +21,13 @@ import javax.inject.Singleton
 object NetworkModule {
     private const val API_KEY = "0fiuZFh4"
     private const val BASE_URL = "https://www.rijksmuseum.nl/api/"
+    private const val TIMEOUT_IN_SECONDS = 1L
 
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
-        .connectTimeout(timeout = 30, unit = TimeUnit.SECONDS)
-        .readTimeout(timeout = 30, unit = TimeUnit.SECONDS)
+        .connectTimeout(timeout = TIMEOUT_IN_SECONDS, unit = TimeUnit.SECONDS)
+        .readTimeout(timeout = TIMEOUT_IN_SECONDS, unit = TimeUnit.SECONDS)
         .addInterceptor(interceptor = ApiKeyInterceptor(API_KEY))
         .addInterceptor(
             interceptor = HttpLoggingInterceptor().apply {

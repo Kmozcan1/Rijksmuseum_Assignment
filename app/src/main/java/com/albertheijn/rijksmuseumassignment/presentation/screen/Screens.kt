@@ -3,7 +3,7 @@ package com.albertheijn.rijksmuseumassignment.presentation.screen
 import androidx.compose.runtime.Composable
 import com.albertheijn.rijksmuseumassignment.presentation.screen.artDetail.ArtDetailsScreen
 import com.albertheijn.rijksmuseumassignment.presentation.screen.artDetail.ArtDetailsScreenTitle
-import com.albertheijn.rijksmuseumassignment.presentation.screen.artList.HomeScreen
+import com.albertheijn.rijksmuseumassignment.presentation.screen.artList.ArtListScreen
 import com.albertheijn.rijksmuseumassignment.presentation.screen.artList.ArtListScreenTopBarTitle
 
 interface Screens {
@@ -32,7 +32,7 @@ interface Screens {
 
         @Composable
         fun Content(onNavigateToDetail: (route: String) -> Unit) {
-            HomeScreen(onNavigateToDetail = onNavigateToDetail)
+            ArtListScreen(onNavigateToDetail = onNavigateToDetail)
         }
 
         @Composable
