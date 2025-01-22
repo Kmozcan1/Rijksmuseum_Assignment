@@ -12,7 +12,7 @@ fun ArtObjectDetailDto.toDomainDetail(): ArtDetails? {
         author = principalOrFirstMaker ?: return null,
         description = plaqueDescriptionEnglish ?: description ?: return null,
         image = webImage?.toDomain() ?: return null,
-        title = longTitle ?: return null,
+        title = title ?: return null,
         presentingDate = dating?.presentingDate ?: return null
     )
 }
