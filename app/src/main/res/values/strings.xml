@@ -4,4 +4,5 @@
     <string name="by_colon">By:</string>
     <string name="error_loading_more_art_items">Error loading more: %1$s</string>
     <string name="unknown_error">Unknown error</string>
+    <string name="error_during_initial_load">Error during initial load: %1$s</string>
 </resources>
