@@ -9,5 +9,4 @@ abstract class ComposableNavigationScreen {
 
     @Composable
     abstract fun TitleContent()
-
 }

@@ -1,6 +1,5 @@
 package com.albertheijn.rijksmuseumassignment.presentation.screen.artList
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -39,6 +38,7 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.albertheijn.rijksmuseumassignment.R
+import com.albertheijn.rijksmuseumassignment.presentation.components.RijksmuseumLogoTopBarContent
 import com.albertheijn.rijksmuseumassignment.presentation.components.TextHeader
 import com.albertheijn.rijksmuseumassignment.presentation.components.TextPrimary
 import com.albertheijn.rijksmuseumassignment.presentation.components.TextSecondary
@@ -47,13 +47,7 @@ import com.albertheijn.rijksmuseumassignment.presentation.model.ArtUiModel
 import com.albertheijn.rijksmuseumassignment.presentation.theme.Dimens
 
 @Composable
-fun ArtListScreenTopBarTitle() {
-    Image(
-        painter = painterResource(id = R.drawable.ic_rijksmuseum_topbar),
-        contentDescription = "Home screen top bar logo",
-        modifier = Modifier.fillMaxSize(fraction = 0.6f)
-    )
-}
+fun ArtListScreenTopBarContent() = RijksmuseumLogoTopBarContent()
 
 // Experimental due to PullToRefreshBox
 @OptIn(ExperimentalMaterial3Api::class)
@@ -70,7 +64,7 @@ fun ArtListScreen(onNavigateToDetail: (route: String) -> Unit) {
 
     /* This if block is to hide the refresh indicator as soon as its pulled,
        because CircularProgressIndicator in ArtListScreenContentBox looks better
-       There's probably a mor elegant way, but sadly I didn't have enough time to do research */
+       There's probably a more elegant way, but sadly I didn't have enough time to do research */
     if (isPullToRefreshEnabled) {
         PullToRefreshBox(
             contentAlignment = Alignment.Center,
@@ -143,8 +137,9 @@ private fun InitialLoadErrorColumn(refreshState: LoadState.Error, modifier: Modi
             text = stringResource(
                 id = R.string.error_during_initial_load,
                 refreshState.error.message
-                    ?: stringResource(id = R.string.unknown_error)
-            )
+                    ?: stringResource(id = R.string.unknown_error),
+            ),
+            textAlign = TextAlign.Center
         )
     }
 }

@@ -2,4 +2,9 @@
 <resources>
 
     <style name="Theme.RijksmuseumAssignment" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.RijksmuseumAssignment.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <item name="postSplashScreenTheme">@style/Theme.RijksmuseumAssignment</item>
+    </style>
 </resources>

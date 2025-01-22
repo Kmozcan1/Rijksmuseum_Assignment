@@ -2,9 +2,9 @@ package com.albertheijn.rijksmuseumassignment.presentation.screen
 
 import androidx.compose.runtime.Composable
 import com.albertheijn.rijksmuseumassignment.presentation.screen.artDetail.ArtDetailsScreen
-import com.albertheijn.rijksmuseumassignment.presentation.screen.artDetail.ArtDetailsScreenTitle
+import com.albertheijn.rijksmuseumassignment.presentation.screen.artDetail.ArtDetailsScreenTopBarContent
 import com.albertheijn.rijksmuseumassignment.presentation.screen.artList.ArtListScreen
-import com.albertheijn.rijksmuseumassignment.presentation.screen.artList.ArtListScreenTopBarTitle
+import com.albertheijn.rijksmuseumassignment.presentation.screen.artList.ArtListScreenTopBarContent
 
 interface Screens {
     object ArtDetail : ComposableNavigationScreen() {
@@ -21,7 +21,7 @@ interface Screens {
 
         @Composable
         override fun TitleContent() {
-            ArtDetailsScreenTitle()
+            ArtDetailsScreenTopBarContent()
         }
     }
 
@@ -37,7 +37,7 @@ interface Screens {
 
         @Composable
         override fun TitleContent() {
-            ArtListScreenTopBarTitle()
+            ArtListScreenTopBarContent()
         }
     }
 

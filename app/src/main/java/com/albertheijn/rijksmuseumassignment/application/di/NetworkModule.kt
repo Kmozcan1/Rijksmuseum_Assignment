@@ -11,8 +11,8 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.create
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
+import retrofit2.create
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -21,7 +21,7 @@ import javax.inject.Singleton
 object NetworkModule {
     private const val API_KEY = "0fiuZFh4"
     private const val BASE_URL = "https://www.rijksmuseum.nl/api/"
-    private const val TIMEOUT_IN_SECONDS = 30L
+    private const val TIMEOUT_IN_SECONDS = 10L
 
     @Provides
     @Singleton
