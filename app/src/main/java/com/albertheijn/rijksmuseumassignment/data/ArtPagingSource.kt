@@ -2,8 +2,8 @@ package com.albertheijn.rijksmuseumassignment.data
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.albertheijn.rijksmuseumassignment.data.mapper.toDomain
 import com.albertheijn.rijksmuseumassignment.data.network.RijksmuseumApi
-import com.albertheijn.rijksmuseumassignment.domain.mapper.toDomain
 import com.albertheijn.rijksmuseumassignment.domain.model.Art
 import timber.log.Timber
 import java.net.SocketTimeoutException
@@ -17,6 +17,7 @@ class ArtPagingSource(
             val getCollectionResponse = rijksmuseumApi.getCollection(page = page)
             val artItems = getCollectionResponse.artObjects?.mapNotNull { it?.toDomain() }.orEmpty()
 
+            // if
             val nextPage = when {
                 page * PAGE_SIZE >= (getCollectionResponse.count ?: 0) -> null
                 else -> page + 1

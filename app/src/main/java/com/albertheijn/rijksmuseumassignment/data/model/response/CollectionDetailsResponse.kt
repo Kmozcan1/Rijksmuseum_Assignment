@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CollectionDetailsResponse(
-    @SerialName("artObjects")
+    @SerialName("artObject")
     val artObject: ArtObjectDetailDto? = null
 ) : RijksmuseumApiResponse()

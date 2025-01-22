@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Rijksmuseum Assignment</string>
+    <string name="date_colon">Date:</string>
+    <string name="by_colon">By:</string>
+    <string name="error_loading_more_art_items">Error loading more: %1$s</string>
+    <string name="unknown_error">Unknown error</string>
 </resources>

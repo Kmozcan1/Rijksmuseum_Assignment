@@ -7,12 +7,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.albertheijn.rijksmuseumassignment.presentation.components.FlowTopBar
 import com.albertheijn.rijksmuseumassignment.presentation.components.TopBarScreen
-import com.albertheijn.rijksmuseumassignment.presentation.screen.home.HomeScreen
+import com.albertheijn.rijksmuseumassignment.presentation.screen.Screens
 import com.albertheijn.rijksmuseumassignment.presentation.util.slidingNavigationEnterAnimation
 import com.albertheijn.rijksmuseumassignment.presentation.util.slidingNavigationExitAnimation
 import com.albertheijn.rijksmuseumassignment.presentation.util.slidingNavigationPopEnterAnimation
@@ -35,31 +37,61 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Content() {
     val navController = rememberNavController()
-
     val viewModel: MainViewModel = hiltViewModel()
-
     val uiState = viewModel.uiState.collectAsState().value
+    val currentScreen = uiState.currentScreen.value
 
     TopBarScreen(
         topBar = {
-            FlowTopBar(navController = navController) {
+            FlowTopBar(
+                navController = navController,
+                hasBackIcon = currentScreen?.hasBackButton ?: false
+            ) {
                 uiState.currentScreen.value?.TitleContent()
             }
         },
     ) {
         NavHost(
             navController = navController,
-            startDestination = HomeScreen().route,
+            startDestination = Screens.ArtList.route,
             enterTransition = slidingNavigationEnterAnimation(),
             exitTransition = slidingNavigationExitAnimation(),
             popEnterTransition = slidingNavigationPopEnterAnimation(),
             popExitTransition = slidingNavigationPopExitAnimation(),
         ) {
-            HomeScreen().let { homeScreen ->
+            Screens.ArtList.let { homeScreen ->
                 composable(route = homeScreen.route) {
-                    viewModel.onEvent(uiEvent = MainViewModel.UIEvent.OnScreenLaunched(homeScreen))
+                    viewModel.onEvent(
+                        uiEvent = MainViewModel.UIEvent.OnScreenLaunched(
+                            screen = homeScreen
+                        )
+                    )
 
-                    homeScreen.Content()
+                    homeScreen.Content { artObjectNumber ->
+                        navController.navigate(
+                            route = Screens.ArtDetail.createRoute(
+                                objectNumber = artObjectNumber
+                            )
+                        )
+                    }
+                }
+            }
+
+            val artDetailNavArgs = listOf(
+                element = navArgument(name = "artObjectNumber") { type = NavType.StringType }
+            )
+            Screens.ArtDetail.let { artDetailScreen ->
+                composable(
+                    route = artDetailScreen.route,
+                    arguments = artDetailNavArgs
+                ) {
+                    viewModel.onEvent(
+                        uiEvent = MainViewModel.UIEvent.OnScreenLaunched(
+                            screen = artDetailScreen
+                        )
+                    )
+
+                    artDetailScreen.Content()
                 }
             }
         }

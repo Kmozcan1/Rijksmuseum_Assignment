@@ -6,7 +6,7 @@ import androidx.paging.PagingData
 import com.albertheijn.rijksmuseumassignment.data.ArtPagingSource
 import com.albertheijn.rijksmuseumassignment.data.PAGE_SIZE
 import com.albertheijn.rijksmuseumassignment.data.network.RijksmuseumApi
-import com.albertheijn.rijksmuseumassignment.domain.mapper.toDomainDetail
+import com.albertheijn.rijksmuseumassignment.data.mapper.toDomainDetail
 import com.albertheijn.rijksmuseumassignment.domain.model.Art
 import com.albertheijn.rijksmuseumassignment.domain.model.ArtDetails
 import com.albertheijn.rijksmuseumassignment.domain.repository.RijksmuseumRepository

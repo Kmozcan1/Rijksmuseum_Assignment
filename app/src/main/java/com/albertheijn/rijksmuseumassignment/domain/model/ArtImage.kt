@@ -1,6 +1,6 @@
 package com.albertheijn.rijksmuseumassignment.domain.model
 
-data class Image(
+data class ArtImage(
     val height: Int,
     val url: String,
     val width: Int

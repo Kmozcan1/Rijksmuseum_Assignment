@@ -8,8 +8,6 @@ abstract class ComposableNavigationScreen {
     abstract val route: String
 
     @Composable
-    abstract fun Content()
-
-    @Composable
     abstract fun TitleContent()
+
 }

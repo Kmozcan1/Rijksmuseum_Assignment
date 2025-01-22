@@ -1,4 +1,4 @@
-package com.albertheijn.rijksmuseumassignment.presentation.components
+package com.albertheijn.rijksmuseumassignment.presentation.theme
 
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
