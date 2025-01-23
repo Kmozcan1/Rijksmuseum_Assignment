@@ -36,7 +36,9 @@ fun NavigationTopBar(
                         contentDescription = "Go back"
                     )
                 }
-                false -> { /* No navigation icon */ }
+
+                false -> { /* No navigation icon */
+                }
             }
 
         }

@@ -17,7 +17,7 @@ fun slidingNavigationEnterAnimation():
         )
     }
 
- fun slidingNavigationExitAnimation():
+fun slidingNavigationExitAnimation():
         AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition =
     {
         slideOutOfContainer(
@@ -26,7 +26,7 @@ fun slidingNavigationEnterAnimation():
         )
     }
 
- fun slidingNavigationPopEnterAnimation():
+fun slidingNavigationPopEnterAnimation():
         AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition =
     {
         slideIntoContainer(
@@ -35,7 +35,7 @@ fun slidingNavigationEnterAnimation():
         )
     }
 
- fun slidingNavigationPopExitAnimation():
+fun slidingNavigationPopExitAnimation():
         AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition =
     {
         slideOutOfContainer(

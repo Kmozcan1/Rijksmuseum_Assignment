@@ -46,6 +46,7 @@ class ArtDetailsViewModel @Inject constructor(
                     when {
                         result.isSuccess -> _uiState.value =
                             UiState.Success(artDetails = result.getOrNull()?.toUiModel())
+
                         result.isFailure -> _uiState.value =
                             UiState.Error(message = result.exceptionOrNull()?.localizedMessage)
                     }

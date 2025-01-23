@@ -101,7 +101,8 @@ private fun ArtList(
                         )
                     )
 
-                else -> { /* Do nothing, no need to show an additional item */ }
+                else -> { /* Do nothing, no need to show an additional item */
+                }
             }
         }
     }

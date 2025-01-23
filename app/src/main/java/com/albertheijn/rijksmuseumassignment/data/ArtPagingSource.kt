@@ -32,7 +32,7 @@ class ArtPagingSource(
                 prevKey = prevPage,
                 nextKey = nextPage
             )
-        }  catch (e: Exception) {
+        } catch (e: Exception) {
             Timber.e(e, "Error loading page in ArtPagingSource. ${params.key}")
 
             LoadResult.Error(e)
