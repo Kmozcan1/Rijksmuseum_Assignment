@@ -21,7 +21,7 @@ import javax.inject.Singleton
 object NetworkModule {
     private const val API_KEY = "0fiuZFh4"
     private const val BASE_URL = "https://www.rijksmuseum.nl/api/"
-    private const val TIMEOUT_IN_SECONDS = 10L
+    private const val TIMEOUT_IN_SECONDS = 20L
 
     @Provides
     @Singleton
@@ -48,7 +48,9 @@ object NetworkModule {
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(
-                json.asConverterFactory("application/json; charset=UTF8".toMediaType())
+                json.asConverterFactory(
+                    contentType = "application/json; charset=UTF8".toMediaType()
+                )
             )
             .build()
     }
