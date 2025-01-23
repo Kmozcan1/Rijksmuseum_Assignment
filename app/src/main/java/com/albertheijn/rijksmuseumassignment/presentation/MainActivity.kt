@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
@@ -31,7 +32,7 @@ class MainActivity : ComponentActivity() {
         val splashScreen = installSplashScreen()
 
         splashScreen.setKeepOnScreenCondition {
-            mainViewModel.uiState.value.shouldShowSplashScreen
+            mainViewModel.uiState.value is MainViewModel.UiState.SplashScreen
         }
 
         enableEdgeToEdge()
@@ -48,8 +49,8 @@ class MainActivity : ComponentActivity() {
 fun RijksmuseumApp() {
     val navController = rememberNavController()
     val viewModel: MainViewModel = hiltViewModel()
-    val uiState = viewModel.uiState.collectAsState().value
-    val currentScreen = uiState.currentScreen
+    val uiState by viewModel.uiState.collectAsState()
+    val currentScreen = (uiState as? MainViewModel.UiState.ComposableScreen)?.currentScreen
 
     TopBarScreen(
         topBar = {
@@ -57,7 +58,7 @@ fun RijksmuseumApp() {
                 navController = navController,
                 hasBackIcon = currentScreen?.hasBackButton ?: false
             ) {
-                uiState.currentScreen?.TitleContent()
+                currentScreen?.TitleContent()
             }
         },
     ) {
@@ -72,7 +73,7 @@ fun RijksmuseumApp() {
             Screens.ArtList.let { homeScreen ->
                 composable(route = homeScreen.route) {
                     viewModel.onEvent(
-                        uiEvent = MainViewModel.UIEvent.OnScreenLaunched(
+                        uiEvent = MainViewModel.UiEvent.OnScreenLaunched(
                             screen = homeScreen
                         )
                     )
@@ -96,7 +97,7 @@ fun RijksmuseumApp() {
                     arguments = artDetailNavArgs
                 ) {
                     viewModel.onEvent(
-                        uiEvent = MainViewModel.UIEvent.OnScreenLaunched(
+                        uiEvent = MainViewModel.UiEvent.OnScreenLaunched(
                             screen = artDetailScreen
                         )
                     )
