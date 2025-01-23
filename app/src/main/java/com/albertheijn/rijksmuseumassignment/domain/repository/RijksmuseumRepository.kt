@@ -6,7 +6,7 @@ import com.albertheijn.rijksmuseumassignment.domain.model.ArtDetails
 import kotlinx.coroutines.flow.Flow
 
 interface RijksmuseumRepository {
-    suspend fun getArtDetails(objectNumber: String): ArtDetails
+    suspend fun getArtDetails(objectNumber: String): Result<ArtDetails>
 
     suspend fun getArtList(): Flow<PagingData<Art>>
 }

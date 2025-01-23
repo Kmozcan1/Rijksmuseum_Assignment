@@ -1,7 +1,5 @@
 package com.albertheijn.rijksmuseumassignment.presentation
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.albertheijn.rijksmuseumassignment.presentation.screen.ComposableNavigationScreen
@@ -10,24 +8,22 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor() : ViewModel() {
-    private val _uiState = MutableStateFlow(UIState())
-    val uiState: StateFlow<UIState> = _uiState
+    private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState.SplashScreen)
+
+    val uiState: StateFlow<UiState> = _uiState
 
     init {
         showSplashScreen()
     }
 
-    fun onEvent(uiEvent: UIEvent) {
+    fun onEvent(uiEvent: UiEvent) {
         when (uiEvent) {
-            is UIEvent.OnScreenLaunched -> _uiState.update {
-                it.copy(currentScreen = uiEvent.screen)
-            }
+            is UiEvent.OnScreenLaunched -> _uiState.value = UiState.ComposableScreen(uiEvent.screen)
         }
     }
 
@@ -35,18 +31,19 @@ class MainViewModel @Inject constructor() : ViewModel() {
         viewModelScope.launch {
             delay(timeMillis = splashScreenDurationInMillis)
 
-            _uiState.update {
-                it.copy(shouldShowSplashScreen = false)
-            }
+            _uiState.value = UiState.SplashScreen
         }
     }
 
-    sealed class UIEvent {
-        data class OnScreenLaunched(val screen: ComposableNavigationScreen) : UIEvent()
+    sealed class UiEvent {
+        data class OnScreenLaunched(val screen: ComposableNavigationScreen) : UiEvent()
     }
 
-    data class UIState(
-        val currentScreen: ComposableNavigationScreen? = null,
-        val shouldShowSplashScreen: Boolean = true
-    )
+    sealed class UiState {
+        data class ComposableScreen(
+            val currentScreen: ComposableNavigationScreen? = null
+        ) : UiState()
+
+        data object SplashScreen : UiState()
+    }
 }
