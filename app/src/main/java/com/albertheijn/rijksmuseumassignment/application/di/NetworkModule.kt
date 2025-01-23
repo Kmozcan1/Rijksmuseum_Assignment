@@ -1,5 +1,6 @@
 package com.albertheijn.rijksmuseumassignment.application.di
 
+import com.albertheijn.rijksmuseumassignment.BuildConfig
 import com.albertheijn.rijksmuseumassignment.data.network.ApiKeyInterceptor
 import com.albertheijn.rijksmuseumassignment.data.network.RijksmuseumApi
 import dagger.Module
@@ -19,16 +20,14 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    private const val API_KEY = "0fiuZFh4"
-    private const val BASE_URL = "https://www.rijksmuseum.nl/api/"
-    private const val TIMEOUT_IN_SECONDS = 10L
+    private const val TIMEOUT_IN_SECONDS = 20L
 
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(timeout = TIMEOUT_IN_SECONDS, unit = TimeUnit.SECONDS)
         .readTimeout(timeout = TIMEOUT_IN_SECONDS, unit = TimeUnit.SECONDS)
-        .addInterceptor(interceptor = ApiKeyInterceptor(API_KEY))
+        .addInterceptor(interceptor = ApiKeyInterceptor(apiKey = BuildConfig.API_KEY))
         .addInterceptor(
             interceptor = HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
@@ -45,10 +44,12 @@ object NetworkModule {
         }
 
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(
-                json.asConverterFactory("application/json; charset=UTF8".toMediaType())
+                json.asConverterFactory(
+                    contentType = "application/json; charset=UTF8".toMediaType()
+                )
             )
             .build()
     }

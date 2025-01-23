@@ -28,7 +28,7 @@ fun LoadErrorColumn(errorMessage: String?, modifier: Modifier = Modifier) {
 
         TextPrimary(
             text = stringResource(
-                id = R.string.error_during_initial_load,
+                id = R.string.error_during_load,
                 errorMessage
                     ?: stringResource(id = R.string.unknown_error),
             ),

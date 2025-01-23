@@ -1,6 +1,6 @@
 package com.albertheijn.rijksmuseumassignment.presentation.model
 
-class ArtDetailsUiModel (
+class ArtDetailsUiModel(
     val author: String,
     val date: String,
     val description: String,
