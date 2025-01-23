@@ -5,7 +5,6 @@ import androidx.paging.PagingState
 import com.albertheijn.rijksmuseumassignment.data.mapper.toDomain
 import com.albertheijn.rijksmuseumassignment.data.network.RijksmuseumApi
 import com.albertheijn.rijksmuseumassignment.domain.model.Art
-import timber.log.Timber
 
 class ArtPagingSource(
     private val rijksmuseumApi: RijksmuseumApi
@@ -33,8 +32,6 @@ class ArtPagingSource(
                 nextKey = nextPage
             )
         } catch (e: Exception) {
-            Timber.e(e, "Error loading page in ArtPagingSource. ${params.key}")
-
             LoadResult.Error(e)
         }
     }
