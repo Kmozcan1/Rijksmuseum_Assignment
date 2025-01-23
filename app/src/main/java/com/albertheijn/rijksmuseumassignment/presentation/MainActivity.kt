@@ -31,8 +31,7 @@ class MainActivity : ComponentActivity() {
         val splashScreen = installSplashScreen()
 
         splashScreen.setKeepOnScreenCondition {
-            // Example: Wait until initialization is complete
-            mainViewModel.uiState.value.shouldShowSplashScreen.value
+            mainViewModel.uiState.value.shouldShowSplashScreen
         }
 
         enableEdgeToEdge()
@@ -50,7 +49,7 @@ fun Content() {
     val navController = rememberNavController()
     val viewModel: MainViewModel = hiltViewModel()
     val uiState = viewModel.uiState.collectAsState().value
-    val currentScreen = uiState.currentScreen.value
+    val currentScreen = uiState.currentScreen
 
     TopBarScreen(
         topBar = {
@@ -58,7 +57,7 @@ fun Content() {
                 navController = navController,
                 hasBackIcon = currentScreen?.hasBackButton ?: false
             ) {
-                uiState.currentScreen.value?.TitleContent()
+                uiState.currentScreen?.TitleContent()
             }
         },
     ) {

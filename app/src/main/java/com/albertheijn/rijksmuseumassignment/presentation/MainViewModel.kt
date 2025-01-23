@@ -10,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,7 +25,9 @@ class MainViewModel @Inject constructor() : ViewModel() {
 
     fun onEvent(uiEvent: UIEvent) {
         when (uiEvent) {
-            is UIEvent.OnScreenLaunched -> _uiState.value.currentScreen.value = uiEvent.screen
+            is UIEvent.OnScreenLaunched -> _uiState.update {
+                it.copy(currentScreen = uiEvent.screen)
+            }
         }
     }
 
@@ -32,7 +35,9 @@ class MainViewModel @Inject constructor() : ViewModel() {
         viewModelScope.launch {
             delay(timeMillis = splashScreenDurationInMillis)
 
-            _uiState.value.shouldShowSplashScreen.value = false
+            _uiState.update {
+                it.copy(shouldShowSplashScreen = false)
+            }
         }
     }
 
@@ -41,7 +46,7 @@ class MainViewModel @Inject constructor() : ViewModel() {
     }
 
     data class UIState(
-        val shouldShowSplashScreen: MutableState<Boolean> = mutableStateOf(value = true),
-        val currentScreen: MutableState<ComposableNavigationScreen?> = mutableStateOf(value = null)
+        val currentScreen: ComposableNavigationScreen? = null,
+        val shouldShowSplashScreen: Boolean = true
     )
 }

@@ -30,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
@@ -67,8 +68,8 @@ fun ArtListScreen(onNavigateToDetail: (route: String) -> Unit) {
             }
         ) {
             ArtListScreenContentBox(
+                lazyPagingItems = lazyPagingItems,
                 refreshState = refreshState,
-                artList = lazyPagingItems.itemSnapshotList.items,
                 appendState = appendState,
                 onNavigateToDetail = onNavigateToDetail
             )
@@ -78,18 +79,21 @@ fun ArtListScreen(onNavigateToDetail: (route: String) -> Unit) {
 
 @Composable
 private fun ArtListScreenContentBox(
+    lazyPagingItems: LazyPagingItems<ArtListItemUiModel>,
     refreshState: LoadState,
-    artList: List<ArtListItemUiModel>,
     appendState: LoadState,
     onNavigateToDetail: (route: String) -> Unit
 ) {
-    Box(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()), contentAlignment = Alignment.Center) {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         when (refreshState) {
             is LoadState.Error -> InitialLoadErrorColumn(
-                refreshState
+                refreshState = refreshState,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()) //needed for PullToRefreshBox to work
             )
             else -> ArtList(
-                items = artList,
+                lazyPagingItems = lazyPagingItems,
                 appendState = appendState,
                 onNavigateToDetail = onNavigateToDetail
             )
@@ -123,7 +127,7 @@ private fun InitialLoadErrorColumn(refreshState: LoadState.Error, modifier: Modi
 
 @Composable
 private fun ArtList(
-    items: List<ArtListItemUiModel>,
+    lazyPagingItems: LazyPagingItems<ArtListItemUiModel>,
     appendState: LoadState,
     onNavigateToDetail: (route: String) -> Unit
 ) {
@@ -133,7 +137,7 @@ private fun ArtList(
         verticalArrangement = Arrangement.spacedBy(space = Dimens.standardHalfPadding),
         contentPadding = PaddingValues(all = Dimens.standardPadding)
     ) {
-        artItems(items = items, onNavigateToDetail = onNavigateToDetail)
+        artItems(lazyPagingItems = lazyPagingItems, onNavigateToDetail = onNavigateToDetail)
 
         item {
             when (appendState) {
@@ -158,17 +162,17 @@ private fun ArtList(
 }
 
 private fun LazyListScope.artItems(
-    items: List<ArtListItemUiModel>,
+    lazyPagingItems: LazyPagingItems<ArtListItemUiModel>,
     onNavigateToDetail: ((route: String) -> Unit)? = null
 ) {
-    items(count = items.size) { index ->
-        when (val item = items[index]) {
+    items(count = lazyPagingItems.itemCount) { index ->
+        when (val item = lazyPagingItems[index]) {
             is ArtListItemUiModel.ArtItem -> ArtListItemColumn(
                 art = item.art,
                 onArtItemClick = onNavigateToDetail
             )
-
             is ArtListItemUiModel.ArtistHeader -> ArtistHeaderColumn(artist = item.artist)
+            null -> {}
         }
     }
 }
