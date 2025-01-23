@@ -19,10 +19,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -32,7 +30,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
@@ -54,65 +51,45 @@ fun ArtListScreenTopBarContent() = RijksmuseumLogoTopBarContent()
 @Composable
 fun ArtListScreen(onNavigateToDetail: (route: String) -> Unit) {
     val viewModel: ArtListViewModel = hiltViewModel()
-    val lazyPagingItems = viewModel.groupedPagingState.collectAsLazyPagingItems()
+    val uiState by viewModel.uiState.collectAsState()
+    val lazyPagingItems = uiState.pagingData.collectAsLazyPagingItems()
     val appendState = lazyPagingItems.loadState.append
     val refreshState = lazyPagingItems.loadState.refresh
 
-    val isPullToRefreshEnabled = refreshState !is LoadState.Loading
 
-    var isRefreshing by remember { mutableStateOf(false) }
-
-    /* This if block is to hide the refresh indicator as soon as its pulled,
-       because CircularProgressIndicator in ArtListScreenContentBox looks better
-       There's probably a more elegant way, but sadly I didn't have enough time to do research */
-    if (isPullToRefreshEnabled) {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         PullToRefreshBox(
             contentAlignment = Alignment.Center,
             modifier = Modifier.fillMaxSize(),
-            isRefreshing = isRefreshing,
+            isRefreshing = refreshState == LoadState.Loading,
             onRefresh = {
-                isRefreshing = true
                 viewModel.onEvent(uiEvent = ArtListViewModel.UIEvent.OnRefresh)
-                isRefreshing = false
             }
         ) {
             ArtListScreenContentBox(
                 refreshState = refreshState,
-                lazyPagingItems = lazyPagingItems,
+                artList = lazyPagingItems.itemSnapshotList.items,
                 appendState = appendState,
                 onNavigateToDetail = onNavigateToDetail
             )
         }
-    } else {
-        ArtListScreenContentBox(
-            refreshState = refreshState,
-            lazyPagingItems = lazyPagingItems,
-            appendState = appendState,
-            onNavigateToDetail = onNavigateToDetail
-        )
     }
 }
 
 @Composable
 private fun ArtListScreenContentBox(
     refreshState: LoadState,
-    lazyPagingItems: LazyPagingItems<ArtListItemUiModel>,
+    artList: List<ArtListItemUiModel>,
     appendState: LoadState,
     onNavigateToDetail: (route: String) -> Unit
 ) {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Box(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()), contentAlignment = Alignment.Center) {
         when (refreshState) {
-            is LoadState.Loading -> CircularProgressIndicator(
-                modifier = Modifier.size(size = Dimens.circularProgressIndicatorSize)
-            )
             is LoadState.Error -> InitialLoadErrorColumn(
-                refreshState,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState()) // Required for PullToRefreshBox
+                refreshState
             )
-            is LoadState.NotLoading -> ArtList(
-                lazyPagingItems = lazyPagingItems,
+            else -> ArtList(
+                items = artList,
                 appendState = appendState,
                 onNavigateToDetail = onNavigateToDetail
             )
@@ -121,7 +98,7 @@ private fun ArtListScreenContentBox(
 }
 
 @Composable
-private fun InitialLoadErrorColumn(refreshState: LoadState.Error, modifier: Modifier) {
+private fun InitialLoadErrorColumn(refreshState: LoadState.Error, modifier: Modifier = Modifier) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -146,7 +123,7 @@ private fun InitialLoadErrorColumn(refreshState: LoadState.Error, modifier: Modi
 
 @Composable
 private fun ArtList(
-    lazyPagingItems: LazyPagingItems<ArtListItemUiModel>,
+    items: List<ArtListItemUiModel>,
     appendState: LoadState,
     onNavigateToDetail: (route: String) -> Unit
 ) {
@@ -156,36 +133,42 @@ private fun ArtList(
         verticalArrangement = Arrangement.spacedBy(space = Dimens.standardHalfPadding),
         contentPadding = PaddingValues(all = Dimens.standardPadding)
     ) {
-        artItems(lazyPagingItems = lazyPagingItems, onNavigateToDetail = onNavigateToDetail)
+        artItems(items = items, onNavigateToDetail = onNavigateToDetail)
 
         item {
             when (appendState) {
                 is LoadState.Loading ->
-                    CircularProgressIndicator(Modifier.size(size = Dimens.circularProgressIndicatorSize))
+                    CircularProgressIndicator(
+                        Modifier.size(size = Dimens.circularProgressIndicatorSize)
+                    )
                 is LoadState.Error ->
-                    TextPrimary(text = stringResource(
-                        id = R.string.error_loading_more_art_items,
-                        appendState.error.message
-                            ?: stringResource(id = R.string.unknown_error)
-                    ))
-                else -> { /* Do nothing, no need to show an additional item */ }
+                    TextPrimary(
+                        text = stringResource(
+                            id = R.string.error_loading_more_art_items,
+                            appendState.error.message
+                                ?: stringResource(id = R.string.unknown_error)
+                        )
+                    )
+
+                else -> { /* Do nothing, no need to show an additional item */
+                }
             }
         }
     }
 }
 
 private fun LazyListScope.artItems(
-    lazyPagingItems: LazyPagingItems<ArtListItemUiModel>,
+    items: List<ArtListItemUiModel>,
     onNavigateToDetail: ((route: String) -> Unit)? = null
 ) {
-    items(count = lazyPagingItems.itemCount) { index ->
-        when (val item = lazyPagingItems[index]) {
+    items(count = items.size) { index ->
+        when (val item = items[index]) {
             is ArtListItemUiModel.ArtItem -> ArtListItemColumn(
                 art = item.art,
                 onArtItemClick = onNavigateToDetail
             )
+
             is ArtListItemUiModel.ArtistHeader -> ArtistHeaderColumn(artist = item.artist)
-            null -> {}
         }
     }
 }
