@@ -17,16 +17,15 @@ import javax.inject.Inject
 class RijksmuseumRepositoryImpl @Inject constructor(
     private val rijksmuseumApi: RijksmuseumApi
 ) : RijksmuseumRepository {
-    override suspend fun getArtDetails(objectNumber: String): ArtDetails {
+    override suspend fun getArtDetails(objectNumber: String): Result<ArtDetails> {
         return try {
             val detailResponse = rijksmuseumApi.getCollectionDetails(objectNumber = objectNumber)
-
-            detailResponse.artObject?.toDomainDetail()
+            val artDetails = detailResponse.artObject?.toDomainDetail()
                 ?: error("Art detail cannot be null (objectNumber=$objectNumber)")
+            Result.success(value = artDetails)
         } catch (e: Exception) {
             Timber.e(e, "Error fetching art details for objectNumber=$objectNumber")
-
-            throw e
+            Result.failure(exception = e)
         }
     }
 

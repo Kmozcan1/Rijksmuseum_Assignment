@@ -39,13 +39,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState = savedInstanceState)
 
         setContent {
-            Content()
+            RijksmuseumApp()
         }
     }
 }
 
 @Composable
-fun Content() {
+fun RijksmuseumApp() {
     val navController = rememberNavController()
     val viewModel: MainViewModel = hiltViewModel()
     val uiState = viewModel.uiState.collectAsState().value

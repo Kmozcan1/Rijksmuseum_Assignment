@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -27,6 +29,7 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.albertheijn.rijksmuseumassignment.R
+import com.albertheijn.rijksmuseumassignment.presentation.components.LoadErrorColumn
 import com.albertheijn.rijksmuseumassignment.presentation.components.RijksmuseumLogoTopBarContent
 import com.albertheijn.rijksmuseumassignment.presentation.components.TextHeader
 import com.albertheijn.rijksmuseumassignment.presentation.components.TextPrimary
@@ -37,28 +40,46 @@ import com.albertheijn.rijksmuseumassignment.presentation.theme.Dimens.standardH
 import com.albertheijn.rijksmuseumassignment.presentation.theme.Dimens.standardPadding
 import com.albertheijn.rijksmuseumassignment.presentation.theme.Dimens.standardQuarterPadding
 
+// Experimental due to PullToRefreshBox
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArtDetailsScreen() {
     val viewModel: ArtDetailsViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsState()
     val scrollState = rememberScrollState()
-    val artDetails = uiState.artDetails
-    val isLoading = uiState.isLoading
 
-    Box(
+    PullToRefreshBox(
         contentAlignment = Alignment.TopCenter,
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(state = scrollState)
+        modifier = Modifier.fillMaxSize(),
+        isRefreshing = uiState is ArtDetailsViewModel.UiState.Refresh,
+        onRefresh = { viewModel.onEvent(ArtDetailsViewModel.UIEvent.OnRefresh) }
     ) {
-        if (isLoading || artDetails == null) {
-            CircularProgressIndicator(
-                modifier = Modifier
-                    .size(size = circularProgressIndicatorSize)
-                    .align(alignment = Alignment.Center)
-            )
-        } else {
-            ArtDetailsColumn(artDetails = artDetails)
+        Box(
+            contentAlignment = Alignment.TopCenter,
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(state = scrollState)
+        ) {
+            when (val state = uiState) {
+                is ArtDetailsViewModel.UiState.Error -> LoadErrorColumn(
+                    errorMessage = state.message,
+                    modifier = Modifier.align(alignment = Alignment.Center)
+                )
+
+                is ArtDetailsViewModel.UiState.Loading ->
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .size(size = circularProgressIndicatorSize)
+                            .align(alignment = Alignment.Center)
+                    )
+
+                is ArtDetailsViewModel.UiState.Success ->
+                    state.artDetails?.let { ArtDetailsColumn(artDetails = it) }
+
+                is ArtDetailsViewModel.UiState.Refresh ->
+                    state.artDetails?.let { ArtDetailsColumn(artDetails = it) }
+
+            }
         }
     }
 }
