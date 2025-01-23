@@ -1,7 +1,7 @@
 package com.albertheijn.rijksmuseumassignment.presentation.screen.artDetail
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
@@ -46,41 +44,14 @@ import com.albertheijn.rijksmuseumassignment.presentation.theme.Dimens.standardQ
 fun ArtDetailsScreen() {
     val viewModel: ArtDetailsViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsState()
-    val scrollState = rememberScrollState()
 
     PullToRefreshBox(
         contentAlignment = Alignment.TopCenter,
         modifier = Modifier.fillMaxSize(),
         isRefreshing = uiState is ArtDetailsViewModel.UiState.Refresh,
-        onRefresh = { viewModel.onEvent(ArtDetailsViewModel.UIEvent.OnRefresh) }
+        onRefresh = { viewModel.onEvent(uiEvent = ArtDetailsViewModel.UIEvent.OnRefresh) }
     ) {
-        Box(
-            contentAlignment = Alignment.TopCenter,
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(state = scrollState)
-        ) {
-            when (val state = uiState) {
-                is ArtDetailsViewModel.UiState.Error -> LoadErrorColumn(
-                    errorMessage = state.message,
-                    modifier = Modifier.align(alignment = Alignment.Center)
-                )
-
-                is ArtDetailsViewModel.UiState.Loading ->
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .size(size = circularProgressIndicatorSize)
-                            .align(alignment = Alignment.Center)
-                    )
-
-                is ArtDetailsViewModel.UiState.Success ->
-                    state.artDetails?.let { ArtDetailsColumn(artDetails = it) }
-
-                is ArtDetailsViewModel.UiState.Refresh ->
-                    state.artDetails?.let { ArtDetailsColumn(artDetails = it) }
-
-            }
-        }
+        ArtDetailsContent(uiState = uiState)
     }
 }
 
@@ -132,6 +103,32 @@ private fun ArtDetailsColumn(artDetails: ArtDetailsUiModel) {
 
             ArtDescriptionRow(description = artDetails.description)
         }
+    }
+}
+
+@Composable
+private fun BoxScope.ArtDetailsContent(
+    uiState: ArtDetailsViewModel.UiState
+) {
+    when (uiState) {
+        is ArtDetailsViewModel.UiState.Error -> LoadErrorColumn(
+            errorMessage = uiState.message,
+            modifier = Modifier.align(alignment = Alignment.Center)
+        )
+
+        is ArtDetailsViewModel.UiState.Loading ->
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .size(size = circularProgressIndicatorSize)
+                    .align(alignment = Alignment.Center)
+            )
+
+        is ArtDetailsViewModel.UiState.Success ->
+            uiState.artDetails?.let { ArtDetailsColumn(artDetails = it) }
+
+        is ArtDetailsViewModel.UiState.Refresh ->
+            uiState.artDetails?.let { ArtDetailsColumn(artDetails = it) }
+
     }
 }
 
