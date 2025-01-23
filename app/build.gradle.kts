@@ -19,6 +19,9 @@ android {
         versionName = "v0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "API_KEY", "\"0fiuZFh4\"")
+        buildConfigField("String", "BASE_URL", "\"https://www.rijksmuseum.nl/api/\"")
     }
 
     buildTypes {
