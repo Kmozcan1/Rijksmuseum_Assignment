@@ -38,5 +38,5 @@ fun ImageDto.toDomain(): ArtImage? {
     )
 }
 
-// simple url check to filter out results with "Static" path
-fun isImageUrlValid(imageUrl: String?) = imageUrl?.contains("https")
+// simple url check to filter out results without "http"
+fun isImageUrlValid(imageUrl: String?) = imageUrl?.contains("http")
