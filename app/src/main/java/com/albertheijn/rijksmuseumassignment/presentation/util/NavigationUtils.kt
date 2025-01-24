@@ -6,8 +6,6 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
 import androidx.navigation.NavBackStackEntry
 
-const val TRANSACTION_ANIMATION_TWEEN: Int = 700
-
 fun slidingNavigationEnterAnimation():
         AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition =
     {

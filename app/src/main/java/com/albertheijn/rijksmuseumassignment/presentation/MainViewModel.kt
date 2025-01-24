@@ -3,7 +3,7 @@ package com.albertheijn.rijksmuseumassignment.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.albertheijn.rijksmuseumassignment.presentation.screen.ComposableNavigationScreen
-import com.albertheijn.rijksmuseumassignment.presentation.util.splashScreenDurationInMillis
+import com.albertheijn.rijksmuseumassignment.presentation.util.SPLASH_SCREEN_DURATION_IN_MILLIS
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,13 +23,14 @@ class MainViewModel @Inject constructor() : ViewModel() {
 
     fun onEvent(uiEvent: UiEvent) {
         when (uiEvent) {
-            is UiEvent.OnScreenLaunched -> _uiState.value = UiState.ComposableScreen(uiEvent.screen)
+            is UiEvent.OnScreenLaunched -> _uiState.value =
+                UiState.ComposableScreen(currentScreen = uiEvent.screen)
         }
     }
 
     private fun showSplashScreen() {
         viewModelScope.launch {
-            delay(timeMillis = splashScreenDurationInMillis)
+            delay(timeMillis = SPLASH_SCREEN_DURATION_IN_MILLIS)
 
             _uiState.value = UiState.SplashScreen
         }
