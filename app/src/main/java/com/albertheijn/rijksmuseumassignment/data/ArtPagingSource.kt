@@ -17,7 +17,7 @@ class ArtPagingSource(
 
             // if page size * page is equal or larger than count, we're at the last page
             val nextPage = when {
-                page * PAGE_SIZE >= (getCollectionResponse.count ?: 0) -> null
+                page * DEFAULT_PAGE_SIZE >= (getCollectionResponse.count ?: 0) -> null
                 else -> page + 1
             }
 

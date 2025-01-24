@@ -4,7 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.albertheijn.rijksmuseumassignment.data.ArtPagingSource
-import com.albertheijn.rijksmuseumassignment.data.PAGE_SIZE
+import com.albertheijn.rijksmuseumassignment.data.DEFAULT_PAGE_SIZE
 import com.albertheijn.rijksmuseumassignment.data.mapper.toDomainDetail
 import com.albertheijn.rijksmuseumassignment.data.network.RijksmuseumApi
 import com.albertheijn.rijksmuseumassignment.domain.model.Art
@@ -31,7 +31,7 @@ class RijksmuseumRepositoryImpl @Inject constructor(
 
     override suspend fun getArtList(): Flow<PagingData<Art>> = Pager(
         config = PagingConfig(
-            pageSize = PAGE_SIZE,
+            pageSize = DEFAULT_PAGE_SIZE,
             prefetchDistance = 5
         ),
         pagingSourceFactory = { ArtPagingSource(rijksmuseumApi) }
