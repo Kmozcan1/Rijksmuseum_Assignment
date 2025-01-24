@@ -17,30 +17,4 @@ class GetArtListUseCaseTest {
         MockKAnnotations.init(this)
         getCollectionUseCase = GetArtListUseCase(repository)
     }
-
-    /* @Test
-    fun `invoke returns list of art from repository`() = runTest {
-        val page = 0
-
-        val fakeList = listOf(
-            Art(
-                id = "0",
-                title = "Night Watch",
-                author = "Rembrandt van Rijn",
-                imageUrl = "someUrl",
-                longTitle = "someLongTitle",
-                objectNumber = "someObjectNumber"
-            )
-        )
-
-        coEvery {
-            repository.getArtList()
-        } returns fakeList
-
-        val result = getCollectionUseCase()
-
-        assertEquals(fakeList, result)
-
-        coVerify(exactly = 1) { repository.getArtList() }
-    } */
 }
