@@ -4,10 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.paging.insertSeparators
-import androidx.paging.map
 import com.albertheijn.rijksmuseumassignment.domain.usecase.GetArtListUseCase
-import com.albertheijn.rijksmuseumassignment.presentation.mapper.toUiModel
+import com.albertheijn.rijksmuseumassignment.presentation.mapper.toArtListItemUiModel
 import com.albertheijn.rijksmuseumassignment.presentation.model.ArtListItemUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,18 +37,7 @@ class ArtListViewModel @Inject constructor(
             getArtListUseCase()
                 .cachedIn(viewModelScope)
                 .map { pagingData ->
-                    pagingData.map { art ->
-                        ArtListItemUiModel.ArtItem(art.toUiModel())
-                    }.insertSeparators { before, after ->
-                        val beforeArt = before?.art
-                        val afterArt = after?.art ?: return@insertSeparators null
-
-                        if (beforeArt?.author != afterArt.author) {
-                            ArtListItemUiModel.ArtistHeader(artist = afterArt.author)
-                        } else {
-                            null
-                        }
-                    }
+                    pagingData.toArtListItemUiModel()
                 }
                 .collect { pagingData ->
                     _pagingDataFlow.value = pagingData

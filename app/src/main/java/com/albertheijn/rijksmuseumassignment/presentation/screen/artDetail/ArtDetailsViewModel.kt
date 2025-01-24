@@ -66,10 +66,10 @@ class ArtDetailsViewModel @Inject constructor(
     sealed class UiState(open val artDetails: ArtDetailsUiModel? = null) {
         data object Loading : UiState()
 
-        data class Error(val message: String?) : UiState()
+        data class Error(val message: String? = null) : UiState()
 
         data class Refresh(override val artDetails: ArtDetailsUiModel?) : UiState(artDetails)
 
-        data class Success(override val artDetails: ArtDetailsUiModel?) : UiState()
+        data class Success(override val artDetails: ArtDetailsUiModel?) : UiState(artDetails)
     }
 }

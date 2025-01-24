@@ -83,6 +83,15 @@ dependencies {
     testImplementation(libs.mockk)
     testImplementation(libs.mockk.android)
     testImplementation(libs.mockk.agent)
+
+    testImplementation(libs.turbine)
+    androidTestImplementation(libs.turbine)
+
+    testImplementation(libs.androidx.paging.testing)
+    testImplementation(libs.androidx.core.testing)
+    androidTestImplementation(libs.androidx.paging.testing)
+    androidTestImplementation(libs.androidx.core.testing)
+
     androidTestImplementation(libs.mockito.core)
     androidTestImplementation(libs.mockk.android)
     androidTestImplementation(libs.mockk.agent)
@@ -113,6 +122,7 @@ dependencies {
 
     // timber
     implementation(libs.timber)
+    testImplementation(kotlin("test"))
 }
 
 kapt {

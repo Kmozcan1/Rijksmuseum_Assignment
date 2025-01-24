@@ -24,5 +24,3 @@ class RijksmuseumApiIntegrationTest {
         assertNotNull(response)
     }
 }
-
-// test the repository, test the mappers, data -> ui, test different states in the ui
