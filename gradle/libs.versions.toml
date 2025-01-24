@@ -1,5 +1,6 @@
 [versions]
 agp = "8.8.0"
+coreTesting = "2.2.0"
 kotlin = "2.1.0"
 coreKtx = "1.15.0"
 junit = "4.13.2"
@@ -14,6 +15,7 @@ mockitoKotlin = "5.4.0"
 mockk = "1.13.16"
 okhttp = "4.12.0"
 loggingInterceptor = "4.12.0"
+pagingTesting = "3.3.5"
 retrofit = "2.11.0"
 hiltAndroid = "2.51.1"
 kotlinxSerializationPlugin = "2.1.0"
@@ -24,9 +26,12 @@ paging = "3.3.5"
 coilCompose = "3.0.4"
 timber = "5.0.1"
 splashScreen = "1.0.1"
+turbine = "1.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
+androidx-paging-testing = { module = "androidx.paging:paging-testing", version.ref = "pagingTesting" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -62,6 +67,7 @@ mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilCompose" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
