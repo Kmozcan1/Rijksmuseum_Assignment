@@ -48,7 +48,7 @@ fun NavigationTopBar(
 @Composable
 fun RijksmuseumLogoTopBarContent() {
     val isDarkTheme = isSystemInDarkTheme()
-    val tintColor = if (isDarkTheme) Color.White else Color.Unspecified
+    val tintColor = if (isDarkTheme) Color.White else Color.Black
 
     Image(
         painter = painterResource(id = R.drawable.ic_rijksmuseum_topbar),
