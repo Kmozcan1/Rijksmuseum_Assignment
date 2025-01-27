@@ -35,10 +35,13 @@ fun PagingData<Art>.toArtListItemUiModel(): PagingData<ArtListItemUiModel> =
     map { art ->
         ArtListItemUiModel.ArtItem(art.toUiModel())
     }.insertSeparators { before, after ->
-        val beforeArt = before?.art
         val afterArt = after?.art ?: return@insertSeparators null
 
-        if (beforeArt?.author != afterArt.author) {
+        val beforeArt = before?.art ?: return@insertSeparators ArtListItemUiModel.ArtistHeader(
+            artist = afterArt.author
+        )
+
+        if (beforeArt.author != afterArt.author) {
             ArtListItemUiModel.ArtistHeader(artist = afterArt.author)
         } else {
             null

@@ -35,10 +35,10 @@ class ArtListViewModel @Inject constructor(
     private fun loadArtCollection() {
         viewModelScope.launch {
             getArtListUseCase()
-                .cachedIn(viewModelScope)
                 .map { pagingData ->
                     pagingData.toArtListItemUiModel()
                 }
+                .cachedIn(viewModelScope)
                 .collect { pagingData ->
                     _pagingDataFlow.value = pagingData
                 }
