@@ -41,6 +41,7 @@ import com.albertheijn.rijksmuseumassignment.presentation.components.TextSeconda
 import com.albertheijn.rijksmuseumassignment.presentation.model.ArtListItemUiModel
 import com.albertheijn.rijksmuseumassignment.presentation.model.ArtUiModel
 import com.albertheijn.rijksmuseumassignment.presentation.theme.Dimens
+import com.albertheijn.rijksmuseumassignment.presentation.util.rememberLazyListStatePagingWorkaround
 
 @Composable
 fun ArtListScreenTopBarContent() = RijksmuseumLogoTopBarContent()
@@ -77,7 +78,10 @@ private fun ArtList(
     appendState: LoadState,
     onNavigateToDetail: (route: String) -> Unit
 ) {
+    val listState = lazyPagingItems.rememberLazyListStatePagingWorkaround()
+
     LazyColumn(
+        state = listState,
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(space = Dimens.standardHalfPadding),
